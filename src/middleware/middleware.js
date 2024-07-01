@@ -105,6 +105,8 @@ function createWebSocketMiddleware() {
     const onMessage = (store) => (event) => {
         const response = JSON.parse(event.data);
         if(Object.prototype.hasOwnProperty.call(response, 'error')) {
+            console.log("ERROR: ", response);
+            alert(response.error);
             return;
         }
         console.log(response)

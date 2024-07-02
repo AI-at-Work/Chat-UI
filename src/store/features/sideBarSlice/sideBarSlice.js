@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    activeSessionId: null,
+    activeSessionId: 'NEW',
     isPopupOpen: false,
     extended: false,
     sessions: [],
@@ -12,7 +12,9 @@ export const sideBarSlice = createSlice({
     initialState: initialState,
     reducers: {
         setActiveSessionId: (state, action) => {
+            console.log("Setting Up New Session Id, ", action.payload)
             state.activeSessionId = action.payload;
+            console.log("Set Up New Session Id, ", state.activeSessionId)
         },
         setExtended: (state) => {
             state.extended = !state.extended

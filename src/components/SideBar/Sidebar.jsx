@@ -36,7 +36,7 @@ function Sidebar() {
     }
 
     const newChat = () => {
-        dispatch(setActiveSessionId(null));
+        dispatch(setActiveSessionId("NEW"));
     }
 
     const extend = () => {

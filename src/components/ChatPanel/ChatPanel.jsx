@@ -19,7 +19,7 @@ function ChatPanel() {
             </div>
 
             <div className="main-container">
-                {activeSessionId === null ?
+                {activeSessionId === "NEW" ?
                   <>
                     <div className="greet">
                       <p>

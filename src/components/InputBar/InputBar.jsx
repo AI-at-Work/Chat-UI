@@ -2,7 +2,7 @@ import './InputBar.css'
 import {assets} from "../../assets/assets.js";
 import {useDispatch, useSelector} from "react-redux";
 import {setAttachment, setDisable, setFileName, setInput} from "../../store/features/inputBarSlice/inputBarSlice.js";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {addChat, removeChat} from "../../store/features/chatPanelSlice/chatPanelSlice.js";
 import {MessageCodeChatMessage} from "../../middleware/messageTypes.js";
 import {MODEL_ID, SESSION_PROMPT, USER_ID} from "../../configs/config.js";
@@ -33,8 +33,9 @@ async function uploadFile(userId, sessionId, attachment, modelId, sessionPrompt,
         console.log(error);
     } finally {
         dispatch(setAttachment({ files: {} }));
-        return [fileName, sessionIdNew, error];
     }
+    console.log("File Uploading Done Session Id", sessionIdNew)
+    return [fileName, sessionIdNew, error];
 }
 
 
@@ -58,6 +59,8 @@ const InputBar = () => {
     const updateInput = async () => {
         console.log("I am getting clicked ..!!")
 
+        if(activeSessionId == null) return;
+
         if(textInput.length === 0 || buttonControl) {
             return
         }
@@ -70,10 +73,13 @@ const InputBar = () => {
         dispatcher(addChat({request: textInput, loading: true, response: "", fileName: ""}));
 
         let fileName = ""
+        let localSessionId = activeSessionId
         if(preview !== "") {
-            let data = await uploadFile(USER_ID, activeSessionId === null ? "NEW" : activeSessionId , attachment, MODEL_ID, SESSION_PROMPT, dispatcher)
-            if(data[2] !== null) {
-                alert("Unabel to upload file .!!!")
+            let [receivedFileName, newSessionId, error]  =
+                await uploadFile(USER_ID, activeSessionId, attachment, MODEL_ID, SESSION_PROMPT, dispatcher)
+
+            if(error !== null) {
+                alert("Unable to upload file .!!!")
                 setButtonControl(false);
                 dispatcher(setInput(""));
                 dispatcher(setDisable(false));
@@ -82,22 +88,33 @@ const InputBar = () => {
             }
 
             console.log("Active SessionId: ", activeSessionId)
-            if(activeSessionId === null) {
+            if(activeSessionId === "NEW") {
                 dispatcher(removeChat());
             }
 
-            fileName = data[0]
-            dispatcher(setActiveSessionId(data[1]))
+            fileName = receivedFileName
+            localSessionId = newSessionId
+
+            dispatcher(setActiveSessionId(newSessionId))
             dispatcher(setFileName(fileName))
+            console.log("Local Active SessionId: ", localSessionId)
+            console.log("Generated Active SessionId: ", newSessionId)
+            console.log("New Active SessionId: ", activeSessionId)
+
+            URL.revokeObjectURL(preview)
+            setPreview("")
         }
 
-        URL.revokeObjectURL(preview)
-        setPreview("")
+        console.log("INOUT")
+        console.log("Local Active SessionId: ", localSessionId)
+        console.log("New Active SessionId: ", activeSessionId)
 
-        dispatcher({ type: 'WEBSOCKET_SEND', payload: {
-            type: MessageCodeChatMessage,
+        dispatcher({
+            type: 'WEBSOCKET_SEND',
+            payload: {
+                type: MessageCodeChatMessage,
                 userId: USER_ID,
-                sessionId: activeSessionId === null ? "NEW" : activeSessionId,
+                sessionId: localSessionId,
                 modelId: MODEL_ID,
                 message: textInput,
                 fileName: fileName,

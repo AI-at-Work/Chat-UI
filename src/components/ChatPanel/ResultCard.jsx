@@ -9,7 +9,7 @@ const ResultCard = ({input, loading, resultData, fileName}) => {
                 <div className="result-title"></div>
                 <img src={assets.user_icon} alt=""/>
                 <p>{input}</p>
-                <p>{fileName !== "" ? <a href={"http://localhost:8000/uploads/images/" + fileName}>File Uploaded</a>: null}</p>
+                <p>{fileName !== "" ? <a href={"http://localhost:8000/uploads/" + fileName}>File Uploaded</a>: null}</p>
                 <div className="result-data"></div>
                 <img src={assets.gemini_icon} alt=""/>
                 {

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.2.5",
+    "@reduxjs/toolkit": "2.2.6",
     "axios": "^1.7.2",
     "isomorphic-dompurify": "^2.11.0",
     "marked": "^12.0.2",

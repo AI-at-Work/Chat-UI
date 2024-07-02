@@ -123,7 +123,8 @@ function createWebSocketMiddleware() {
                 store.dispatch(setDisable(false))
                 break
             case MessageCodeChatMessage:
-                if(store.getState().sideBar.activeSessionId === null) {
+                console.log("In Middle Ware On Receiving: ", response.data.session_id)
+                if(store.getState().sideBar.activeSessionId === "NEW") {
                     store.dispatch(setActiveSessionId(response.data.session_id))
                     store.dispatch(addOneSidebar({session_id: response.data.session_id, session_name: response.data.session_name}))
                     store.dispatch(setChat([]))
@@ -168,7 +169,10 @@ function createWebSocketMiddleware() {
                         request = getUserChatsBySessionId(action.payload.userId, action.payload.sessionId)
                         break
                     case MessageCodeChatMessage:
-                        request = getUserChatsResponse(action.payload.userId, action.payload.sessionId, action.payload.modelId, action.payload.message, action.payload.sessionPrompt, action.payload.fileName)
+                        console.log("In Middle Ware On Sending: ", action.payload.sessionId)
+                        request = getUserChatsResponse(action.payload.userId, action.payload.sessionId,
+                            action.payload.modelId, action.payload.message, action.payload.sessionPrompt,
+                            action.payload.fileName)
                         break
                     case MessageCodeSessionDelete:
                         request = deleteUserSession(action.payload.userId, action.payload.sessionId)

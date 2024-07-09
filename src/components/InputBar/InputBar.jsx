@@ -169,7 +169,6 @@ const InputBar = () => {
                                 <img
                                     src={assets.gallery_icon}
                                     onClick={open}
-                                    alt="Upload"
                                 />
                             </div>
                         )}

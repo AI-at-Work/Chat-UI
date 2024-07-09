@@ -1,7 +1,23 @@
+:root {
+    --primary-color: #3498db;
+    --primary-color-light: #5dade2;
+    --primary-color-dark: #2980b9;
+    --secondary-color: #e74c3c;
+    --text-color: #333333;
+    --text-color-light: #ffffff;
+    --text-color-muted: #585858;
+    --background-color: #f0f4f9;
+    --background-color-light: #ffffff;
+    --background-color-dark: #e2e6eb;
+}
+
 html, body, #root {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .main {
@@ -19,8 +35,9 @@ html, body, #root {
     justify-content: space-between;
     font-size: 22px;
     padding: 20px;
-    color: #585858;
-    background-color: #f5f5f5;
+    color: var(--text-color-muted);
+    background-color: var(--background-color-light);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .main .nav img {
@@ -46,12 +63,12 @@ html, body, #root {
     justify-content: center;
     padding: 20px;
     font-size: 56px;
-    color: #c4c7c5;
+    color: var(--text-color-muted);
     font-weight: 500;
 }
 
 .main .greet span {
-    background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+    background: -webkit-linear-gradient(16deg, var(--primary-color), var(--secondary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -75,7 +92,7 @@ html, body, #root {
     width: 100%;
     max-width: 900px;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--background-color-light);
     z-index: 10;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
@@ -86,6 +103,7 @@ html, body, #root {
     margin: 15px auto;
     text-align: center;
     font-weight: 300;
+    color: var(--text-color-muted);
 }
 
 .result-title {
@@ -116,8 +134,8 @@ html, body, #root {
 .loader hr {
     border-radius: 4px;
     border: none;
-    background-color: #f6f7f8;
-    background: linear-gradient(to right, #9ed7ff, #ffffff, #9ed7ff);
+    background-color: var(--background-color);
+    background: linear-gradient(to right, var(--primary-color-light), var(--background-color-light), var(--primary-color-light));
     background-size: 800px 50px;
     height: 20px;
     animation: loader 3s infinite linear;
@@ -136,4 +154,5 @@ html, body, #root {
     font-size: 17px;
     font-weight: 300;
     line-height: 1.8;
+    color: var(--text-color);
 }

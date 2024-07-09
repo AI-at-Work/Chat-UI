@@ -18,8 +18,10 @@ function Sidebar() {
     const sessions = useSelector((state) => state.sideBar.sessions);
     const isPopupOpen = useSelector((state) => state.sideBar.isPopupOpen);
     const dispatch = useDispatch();
+    const [isHelpPopupOpen, setIsHelpPopupOpen] = React.useState(false);
 
     const closeModal = () => dispatch(setPopupOpen(false));
+    const closeHelpModal = () => setIsHelpPopupOpen(false);
 
     const handleChange = (event) => {
         dispatch(setModelName(event.target.value));
@@ -27,6 +29,10 @@ function Sidebar() {
 
     const openPopup = () => {
         dispatch(setPopupOpen(true));
+    };
+
+    const openHelpPopup = () => {
+        setIsHelpPopupOpen(true);
     };
 
     const loadPrompt = (item) => {
@@ -79,13 +85,9 @@ function Sidebar() {
                 )}
             </div>
             <div className="bottom">
-                <div className="bottom-item recent-entry">
+                <div className="bottom-item recent-entry" onClick={openHelpPopup}>
                     <img src={assets.question_icon} alt="Help" />
                     {extended && <p>Help</p>}
-                </div>
-                <div className="bottom-item recent-entry">
-                    <img src={assets.history_icon} alt="Activity" />
-                    {extended && <p>Activity</p>}
                 </div>
                 <div className="bottom-item recent-entry" onClick={openPopup}>
                     <img src={assets.setting_icon} alt="Settings" />
@@ -104,6 +106,18 @@ function Sidebar() {
                             ))}
                         </select>
                         <button onClick={closeModal}>Close</button>
+                    </div>
+                </div>
+            )}
+            {isHelpPopupOpen && (
+                <div className="popup-overlay" onClick={closeHelpModal}>
+                    <div className="popup-content help-popup" onClick={(e) => e.stopPropagation()}>
+                        <h2>Help</h2>
+                        <p>For more information and documentation, please visit our GitHub repository:</p>
+                        <a href="https://github.com/AI-at-Work/Chat-Backend" target="_blank" rel="noopener noreferrer">
+                            Project GitHub Repository
+                        </a>
+                        <button onClick={closeHelpModal}>Close</button>
                     </div>
                 </div>
             )}

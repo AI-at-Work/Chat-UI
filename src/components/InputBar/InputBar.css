@@ -2,15 +2,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     background-color: #f0f4f9;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border-radius: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .search-box img {
     width: 24px;
+    height: 24px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .search-box input {
@@ -19,13 +25,14 @@
     border: none;
     outline: none;
     padding: 8px;
-    font-size: 18px;
+    font-size: 16px;
+    min-width: 0; /* Allows input to shrink below its content size */
 }
 
 .search-box div {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .send-button {
@@ -33,28 +40,80 @@
     border: none;
     cursor: pointer;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .send-button img {
-    width: 24px; /* Adjust size as needed */
-    height: 24px; /* Adjust size as needed */
-}
-
-.message-form-preview-image {
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
 }
 
 .message-form-preview {
     position: relative;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.message-form-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
 }
 
 .message-form-icon-x {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -5px;
+    right: -5px;
     color: #0f2936 !important;
     width: 15px !important;
     height: 15px !important;
     cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .search-box {
+        padding: 8px 12px;
+    }
+
+    .search-box input {
+        font-size: 14px;
+    }
+
+    .search-box img,
+    .send-button img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .message-form-preview {
+        width: 32px;
+        height: 32px;
+    }
+
+    .message-form-icon-x {
+        width: 12px !important;
+        height: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        gap: 8px;
+    }
+
+    .search-box div {
+        gap: 8px;
+    }
+
+    .search-box input {
+        padding: 6px;
+    }
 }

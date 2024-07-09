@@ -153,6 +153,7 @@ const InputBar = () => {
 
                 <div>
                     <Dropzone
+                        className="dropzone-button"
                         maxFiles={1}
                         acceptedFiles=".jpg,.jpeg,.png,.pdf,.txt"
                         multiple={false}
@@ -168,6 +169,7 @@ const InputBar = () => {
                                 <img
                                     src={assets.gallery_icon}
                                     onClick={open}
+                                    alt="Upload"
                                 />
                             </div>
                         )}

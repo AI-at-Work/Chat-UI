@@ -51,6 +51,7 @@ function convertMessages(messages) {
             }
             // Push the request-response pair into result
             result.push({ request, response, loading: false, fileName: fileName });
+            fileName = request = response = ""
         }
     });
 

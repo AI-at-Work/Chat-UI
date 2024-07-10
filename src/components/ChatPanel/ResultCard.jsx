@@ -4,24 +4,27 @@ import DOMPurify from 'isomorphic-dompurify';
 
 const ResultCard = ({input, loading, resultData, fileName}) => {
     return (
-        <div>
-            <div className="result">
-                <div className="result-title"></div>
-                <img src={assets.user_icon} alt=""/>
-                <p>{input}</p>
-                <p>{fileName !== "" ? <a href={"http://localhost:8000/uploads/" + fileName}>File Uploaded</a>: null}</p>
-                <div className="result-data"></div>
-                <img src={assets.gemini_icon} alt=""/>
-                {
-                    loading ?
-                        <div className="loader">
-                            <hr/>
-                            <hr/>
-                            <hr/>
-                        </div>
-                        :
-                        <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(marked.parse(resultData))}}></div>
-                }
+        <div className="result-card">
+            <div className="user-input">
+                <img src={assets.user_icon} alt="User" className="user-icon"/>
+                <div className="input-content">
+                    <p>{input}</p>
+                    {fileName !== "" && <p><a href={`http://localhost:8000/uploads/${fileName}`}>File Uploaded</a></p>}
+                </div>
+            </div>
+            <div className="ai-response">
+                {loading ? (
+                    <div className="loader">
+                        <hr/><hr/><hr/>
+                    </div>
+                ) : (
+                    <div
+                        className="response-content"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(marked.parse(resultData))
+                        }}
+                    />
+                )}
             </div>
         </div>
     );

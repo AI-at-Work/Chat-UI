@@ -3,7 +3,7 @@ import {
     MessageCodeChatsBySessionId,
     MessageCodeListSessions,
     MessageCodeUserDetails,
-    MessageCodeSessionDelete, MessageCodeGetAIModels
+    MessageCodeSessionDelete, MessageCodeGetAIModels, MessageCodeGetBalance
 } from "./messageTypes.js";
 
 export const getUserDetails = (userId) => ({
@@ -57,6 +57,13 @@ export const deleteUserSession = (userId, sessionId) => ({
 
 export const modelList = (userId) => ({
     type: MessageCodeGetAIModels,
+    data: {
+        user_id: userId,
+    },
+});
+
+export const getBalance = (userId) => ({
+    type: MessageCodeGetBalance,
     data: {
         user_id: userId,
     },

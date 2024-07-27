@@ -3,6 +3,7 @@ import {DEFAULT_MODEL, USERNAME} from "../../../configs/config.js";
 
 const initialState = {
     username: USERNAME,
+    balance: 0.0,
     modelName: DEFAULT_MODEL,
     allModels: [],
     chats: []
@@ -36,9 +37,12 @@ export const chatPanelSlice = createSlice({
         },
         removeChat: (state, action) => {
             state.chats.pop()
-        }
+        },
+        setBalance: (state, action) => {
+          state.balance = action.payload
+        },
     }
 })
 
-export const {setAllModel, setModelName, setChat , setUsername, addChat, removeChat} = chatPanelSlice.actions;
+export const {setAllModel, setModelName, setChat , setUsername, addChat, removeChat, setBalance} = chatPanelSlice.actions;
 export default chatPanelSlice.reducer;

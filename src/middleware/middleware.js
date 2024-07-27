@@ -1,5 +1,5 @@
 import {
-    deleteUserSession,
+    deleteUserSession, getBalance,
     getUserChatsBySessionId,
     getUserChatsResponse,
     getUserDetails,
@@ -10,14 +10,15 @@ import {
     MessageCodeChatsBySessionId,
     MessageCodeListSessions,
     MessageCodeUserDetails,
-    MessageCodeSessionDelete, MessageCodeGetAIModels
+    MessageCodeSessionDelete, MessageCodeGetAIModels, MessageCodeGetBalance
 } from "./messageTypes.js";
 import {addOneSidebar, addToSidebar, setActiveSessionId} from "../store/features/sideBarSlice/sideBarSlice.js";
 import {setDisable, setFileName, setInput} from "../store/features/inputBarSlice/inputBarSlice.js";
 import {
     setChat, setAllModel,
-    setUsername, addChat
+    setUsername, addChat, setBalance
 } from "../store/features/chatPanelSlice/chatPanelSlice.js";
+import {MODEL_ID, SESSION_PROMPT, USER_ID} from "../configs/config.js";
 
 function convertMessages(messages) {
     const result = [];
@@ -136,9 +137,20 @@ function createWebSocketMiddleware() {
                 store.dispatch(setDisable(false))
                 store.dispatch(setInput(""))
 
+                store.dispatch({
+                    type: 'WEBSOCKET_SEND',
+                    payload: {
+                        type: MessageCodeGetBalance,
+                        userId: USER_ID,
+                    }
+                })
+
                 break
             case MessageCodeGetAIModels:
                 store.dispatch(setAllModel(response.data.models))
+                break
+            case MessageCodeGetBalance:
+                store.dispatch(setBalance(response.data.balance))
                 break
             case MessageCodeSessionDelete:
                 break
@@ -180,6 +192,9 @@ function createWebSocketMiddleware() {
                         break
                     case MessageCodeGetAIModels:
                         request = modelList(action.payload.userId)
+                        break
+                    case MessageCodeGetBalance:
+                        request = getBalance(action.payload.userId)
                         break
                     default:
                         return

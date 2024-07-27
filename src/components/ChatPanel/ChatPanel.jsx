@@ -8,6 +8,7 @@ import ResultCard from "./ResultCard.jsx";
 // middle ware will call the setActiveSessionID and set the results in chats
 function ChatPanel() {
     const username  = useSelector(state => state.chatPanel.username);
+    const balance  = useSelector(state => state.chatPanel.balance);
     const chats  = useSelector(state => state.chatPanel.chats);
     const activeSessionId = useSelector(state => state.sideBar.activeSessionId);
 
@@ -16,6 +17,7 @@ function ChatPanel() {
             <div className="nav">
                 <p>AI Chat</p>
                 <img src={assets.user_icon} alt=""/>
+                <p>Balance {balance}</p>
             </div>
 
             <div className="main-container">

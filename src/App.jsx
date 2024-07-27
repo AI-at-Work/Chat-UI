@@ -3,7 +3,12 @@ import ChatPanel from "./components/ChatPanel/ChatPanel.jsx";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {USER_ID, WEBSOCKET_URL} from "./configs/config.js";
-import {MessageCodeGetAIModels, MessageCodeListSessions, MessageCodeUserDetails} from "./middleware/messageTypes.js";
+import {
+    MessageCodeGetAIModels,
+    MessageCodeGetBalance,
+    MessageCodeListSessions,
+    MessageCodeUserDetails
+} from "./middleware/messageTypes.js";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -33,8 +38,12 @@ const App = () => {
             }
         });
 
+        dispatch({ type: 'WEBSOCKET_SEND', payload: {
+                type: MessageCodeGetBalance,
+                userId: USER_ID,
+            }
+        });
     });
-
 
     return (
       <>

@@ -31,7 +31,7 @@ export const getUserChatsBySessionId = (userId, sessionId) => ({
 export const getUserChatsResponse = (
     userId,
     sessionId,
-    modelId,
+    modelName,
     message,
     sessionPrompt,
     fileName
@@ -40,7 +40,7 @@ export const getUserChatsResponse = (
     data: {
         user_id: userId,
         session_id: sessionId,
-        model_id: modelId,
+        model_name: modelName,
         message: message,
         session_prompt: sessionPrompt,
         file_name: fileName,

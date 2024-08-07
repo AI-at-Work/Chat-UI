@@ -1,6 +1,6 @@
 export const WEBSOCKET_URL = 'ws://localhost:8000/ws';
-export const USER_ID = '75532bec-967e-4c15-ba26-798c481c9b52';
+export const USER_ID = 'f5387785-00b4-439c-a71b-e5948c1bcbb6';
 export const USERNAME = 'Default';
 export const MODEL_ID     = 4;
 export const SESSION_PROMPT = "";
-export const DEFAULT_MODEL = "gpt-4-turbo";
+export const DEFAULT_MODEL = "llama3.1:8b";

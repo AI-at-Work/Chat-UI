@@ -3,14 +3,14 @@ import {assets} from "../../assets/assets.js";
 import {useDispatch, useSelector} from "react-redux";
 import {setAttachment, setDisable, setFileName, setInput} from "../../store/features/inputBarSlice/inputBarSlice.js";
 import {useCallback, useEffect, useState} from "react";
-import {addChat, removeChat} from "../../store/features/chatPanelSlice/chatPanelSlice.js";
+import {addChat, removeChat, setModelName} from "../../store/features/chatPanelSlice/chatPanelSlice.js";
 import {MessageCodeChatMessage} from "../../middleware/messageTypes.js";
-import {MODEL_ID, SESSION_PROMPT, USER_ID} from "../../configs/config.js";
+import {SESSION_PROMPT, USER_ID} from "../../configs/config.js";
 import Dropzone from "react-dropzone";
 import axios from 'axios';
 import {setActiveSessionId} from "../../store/features/sideBarSlice/sideBarSlice.js";
 
-async function uploadFile(userId, sessionId, attachment, modelId, sessionPrompt, dispatch) {
+async function uploadFile(userId, sessionId, attachment, modelName, sessionPrompt, dispatch) {
     let fileName = "";
     let sessionIdNew = "";
     let error = null
@@ -19,7 +19,7 @@ async function uploadFile(userId, sessionId, attachment, modelId, sessionPrompt,
         formData.append("file", attachment);
         formData.set("user_id", userId);
         formData.set("session_id", sessionId);
-        formData.set("model_id", modelId);
+        formData.set("model_name", modelName);
         formData.set("session_prompt", sessionPrompt);
         const response = await axios.post("http://localhost:8000/upload", formData);
         console.log("response", response);
@@ -44,6 +44,7 @@ const InputBar = () => {
     const isDisable = useSelector(state => state.inputBar.isDisable);
     const activeSessionId = useSelector(state => state.sideBar.activeSessionId);
     const attachment = useSelector(state => state.inputBar.attachment);
+    const modelName = useSelector(state => state.chatPanel.modelName);
     const dispatcher = useDispatch();
 
     const [textInput, setTextInput] = useState("");
@@ -76,7 +77,7 @@ const InputBar = () => {
         let localSessionId = activeSessionId
         if(preview !== "") {
             let [receivedFileName, newSessionId, error]  =
-                await uploadFile(USER_ID, activeSessionId, attachment, MODEL_ID, SESSION_PROMPT, dispatcher)
+                await uploadFile(USER_ID, activeSessionId, attachment, modelName, SESSION_PROMPT, dispatcher)
 
             if(error !== null) {
                 alert("Unable to upload file .!!!")
@@ -115,7 +116,7 @@ const InputBar = () => {
                 type: MessageCodeChatMessage,
                 userId: USER_ID,
                 sessionId: localSessionId,
-                modelId: MODEL_ID,
+                modelName: modelName,
                 message: textInput,
                 fileName: fileName,
                 sessionPrompt: SESSION_PROMPT,

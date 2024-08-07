@@ -18,7 +18,7 @@ import {
     setChat, setAllModel,
     setUsername, addChat, setBalance
 } from "../store/features/chatPanelSlice/chatPanelSlice.js";
-import {MODEL_ID, SESSION_PROMPT, USER_ID} from "../configs/config.js";
+import {USER_ID} from "../configs/config.js";
 
 function convertMessages(messages) {
     const result = [];
@@ -105,6 +105,7 @@ function createWebSocketMiddleware() {
     };
 
     const onMessage = (store) => (event) => {
+        console.log(event.data)
         const response = JSON.parse(event.data);
         if(Object.prototype.hasOwnProperty.call(response, 'error')) {
             console.log("ERROR: ", response);
@@ -184,7 +185,7 @@ function createWebSocketMiddleware() {
                     case MessageCodeChatMessage:
                         console.log("In Middle Ware On Sending: ", action.payload.sessionId)
                         request = getUserChatsResponse(action.payload.userId, action.payload.sessionId,
-                            action.payload.modelId, action.payload.message, action.payload.sessionPrompt,
+                            action.payload.modelName, action.payload.message, action.payload.sessionPrompt,
                             action.payload.fileName)
                         break
                     case MessageCodeSessionDelete:

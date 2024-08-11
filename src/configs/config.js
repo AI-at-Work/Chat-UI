@@ -1,5 +1,5 @@
 export const WEBSOCKET_URL = 'ws://localhost:8000/ws';
-export const USER_ID = 'f5387785-00b4-439c-a71b-e5948c1bcbb6';
+export const USER_ID = 'bdff475a-a7f7-4590-9595-15fd8e6c7d0c';
 export const USERNAME = 'Default';
 export const MODEL_ID     = 4;
 export const SESSION_PROMPT = "";
